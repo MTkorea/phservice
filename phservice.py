@@ -344,13 +344,6 @@ async def on_message(message):
 async def my_background_task():
     await client.wait_until_ready()
     while not client.is_closed():
-        
-"""
-        game = discord.Game("봇 테스팅중")
-        await client.change_presence(status=discord.Status.online, activity=game)
-        await asyncio.sleep(2)  
-"""
-
         game = discord.Game("!도움말")
         await client.change_presence(status=discord.Status.online, activity=game)
         await asyncio.sleep(2)
@@ -363,6 +356,11 @@ async def my_background_task():
         game = discord.Game(f'{len(client.users)}명의 유저들과 소통하는중')
         await client.change_presence(status=discord.Status.online, activity=game)
         await asyncio.sleep(2)
+"""
+        game = discord.Game("봇 테스팅중")
+        await client.change_presence(status=discord.Status.online, activity=game)
+        await asyncio.sleep(2)  
+"""
 
 access_token = os.environ["BOT_TOKEN"]
         
