@@ -28,7 +28,7 @@ async def on_message(message):
                         if message.author.id == 560330444428673026:
                             embed=discord.Embed(colour=0x0170ed, timestamp=message.created_at, title="초고퀄 최저가 프사샵")
                             embed.add_field(name="전체공지", value=msg, inline=True)
-                            embed.set_footer(text=f"부담없이 문의주세용!")
+                            embed.set_footer(text=f"문의는 OOOP!#2036")
                             await i.send(embed=embed)
                     except:
                         pass
