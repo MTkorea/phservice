@@ -68,7 +68,9 @@ async def on_message(message):
             embed.add_field(name="대화봇 <할말> (Beta)", value=f'예) "대화봇 안녕" 등등 답을 해줍니다.', inline=False)
             embed.add_field(name="!내정보", value=f'간단한 자신의정보를 확인할수 있습니다.', inline=False)
             embed.add_field(name="!핑", value=f'봇 정상 동작여부를 확인합니다.', inline=False)
+            embed.add_field(name="!할까 말까", value=f'선택장애 당신에게 필요한 명령어', inline=False)
             embed.add_field(name="!주사위", value=f'주사위를 굴릴수 있습니다. 1 ~ 6까지 랜덤으로 나옵니다.', inline=False)
+            embed.add_field(name="!현재시각", value=f'현재시각을 출력합니다!', inline=False)
             embed.set_footer(text=client.user.name, icon_url=client.user.avatar_url)
             await message.channel.send(embed=embed)
 
@@ -80,7 +82,35 @@ async def on_message(message):
             await message.channel.send(embed=embed)
 
 #대화봇 부분
-            
+
+    if message.content.startswith('+핑'):
+        before = time.monotonic()
+        msg = await client.send_message(message.channel, ':ping_pong: 퐁!')
+        ping = (time.monotonic() - before) * 1000
+        text = ":ping_pong: 퐁!  {0}ms ".format((round(ping, 1)))
+        await client.edit_message(msg, text)
+        print(text)
+        
+    if message.content.startswith('!현재시각'):
+        t = t = datetime.datetime.now()
+        h = str(t.hour)
+        m = str(t.minute)
+        s = str(t.second)
+        await message.channel.send('지금 시각은 **' + h + ':' + m + ':' + s + '**(이)입니다.')
+
+    if message.content.startswith('!할까 말까'):
+        randomNum = random.randrange(1, 3)
+        if randomNum==1:
+            embed=discord.Embed(title='대화봇', color=0x0000FF, timestamp=message.created_at)
+            embed.add_field(name="할까 말까 :", value=f'하세요!', inline=True)
+            embed.set_footer(text=client.user.name, icon_url=client.user.avatar_url)
+            await message.channel.send(embed=embed)
+        else:
+            embed=discord.Embed(title='대화봇', color=0xFF0000, timestamp=message.created_at)
+            embed.add_field(name="할까 말까 :", value=f'하지마세요!', inline=True)
+            embed.set_footer(text=client.user.name, icon_url=client.user.avatar_url)
+            await message.channel.send(embed=embed)
+
     if message.content == '!핑':
             embed=discord.Embed(title='대화봇', color=0x0170ed, timestamp=message.created_at)
             embed.add_field(name="퐁!:ping_pong: ", value=f'봇이 정상적으로 동작중입니다.', inline=True)
@@ -133,7 +163,7 @@ async def on_message(message):
             await message.channel.send(embed=embed)
         if randomNum ==6:
             embed=discord.Embed(title='대화봇', color=0x0170ed, timestamp=message.created_at)
-            embed.add_field(name="주사위", value=f'2번!', inline=True)
+            embed.add_field(name="주사위", value=f'6번!', inline=True)
             embed.set_image(url=f"http://www.apcls.kro.kr/file/주사위/6.png")
             embed.set_footer(text=client.user.name, icon_url=client.user.avatar_url)
             await message.channel.send(embed=embed)
@@ -314,11 +344,13 @@ async def on_message(message):
 async def my_background_task():
     await client.wait_until_ready()
     while not client.is_closed():
-        game = discord.Game("봇 테스팅중")
-        await client.change_presence(status=discord.Status.online, activity=game)
-        await asyncio.sleep(2)
         
 """
+        game = discord.Game("봇 테스팅중")
+        await client.change_presence(status=discord.Status.online, activity=game)
+        await asyncio.sleep(2)  
+"""
+
         game = discord.Game("!도움말")
         await client.change_presence(status=discord.Status.online, activity=game)
         await asyncio.sleep(2)
@@ -331,7 +363,6 @@ async def my_background_task():
         game = discord.Game(f'{len(client.users)}명의 유저들과 소통하는중')
         await client.change_presence(status=discord.Status.online, activity=game)
         await asyncio.sleep(2)
-"""
 
 access_token = os.environ["BOT_TOKEN"]
         
