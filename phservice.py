@@ -3,6 +3,7 @@ import asyncio
 import random
 import time
 import datetime
+import aiohttp
 import os
 
 client = discord.Client()
@@ -28,7 +29,7 @@ async def on_message(message):
                         if message.author.id == 560330444428673026:
                             embed=discord.Embed(colour=0x0170ed, timestamp=message.created_at, title="초고퀄 최저가 프사샵")
                             embed.add_field(name="전체공지", value=msg, inline=True)
-                            embed.set_footer(text=f"문의는 OOOP!#2036")
+                            embed.set_footer(text=f"문의 : OOOP!#2036")
                             await i.send(embed=embed)
                     except:
                         pass
@@ -81,8 +82,35 @@ async def on_message(message):
             embed.set_footer(text=client.user.name, icon_url=client.user.avatar_url)
             await message.channel.send(embed=embed)
 
-#대화봇 부분
+#테스트 부분
 
+    if message.content.startswith('!p'):
+        '''고양이~'''
+        #http://discordpy.readthedocs.io/en/latest/faq.html#what-does-blocking-mean
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get('http://aws.random.cat/meow') as r:
+                res = await r.json()
+                emojis = [':cat2: ', ':cat: ', ':heart_eyes_cat: ']
+                await message.channel.send(random.choice(emojis) + res['file'])
+ 
+    if message.content.startswith('!pong'):
+        '''HYPE TRAIN CHOO CHOO'''
+        hypu = ['https://cdn.discordapp.com/attachments/102817255661772800/219514281136357376/tumblr_nr6ndeEpus1u21ng6o1_540.gif',
+                'https://cdn.discordapp.com/attachments/102817255661772800/219518372839161859/tumblr_n1h2afSbCu1ttmhgqo1_500.gif',
+                'https://gfycat.com/HairyFloweryBarebirdbat',
+                'https://i.imgur.com/PFAQSLA.gif',
+                'https://abload.de/img/ezgif-32008219442iq0i.gif',
+                'https://i.imgur.com/vOVwq5o.jpg',
+                'https://i.imgur.com/Ki12X4j.jpg',
+                'https://media.giphy.com/media/b1o4elYH8Tqjm/giphy.gif']
+        msg = f':train2: CHOO CHOO {random.choice(hypu)}'
+        await message.channel.send(msg)
+        
+    if message.content.startswith('!ping'):
+        '''Praise the Sun'''
+        await message.channel.send('https://i.imgur.com/K8ySn3e.gif')
+
+#대화봇 부분
     if message.content.startswith('+핑'):
         before = time.monotonic()
         msg = await client.send_message(message.channel, ':ping_pong: 퐁!')
@@ -338,7 +366,6 @@ async def on_message(message):
             embed.add_field(name="응답 :", value=f'개때끼가 딴데가서 지럴해 여기서 지럴하지말고', inline=True)
             embed.set_footer(text=client.user.name, icon_url=client.user.avatar_url)
             await message.channel.send(embed=embed)
-
 
 #상태메세지 부분
 async def my_background_task():
